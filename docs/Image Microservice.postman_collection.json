@@ -1,0 +1,421 @@
+{
+	"info": {
+		"_postman_id": "f3935c4d-c845-4e32-a5ea-b76e65ff0a7c",
+		"name": "Image Microservice",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13600929"
+	},
+	"item": [
+		{
+			"name": "Sign in",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"var token = jsonData[\"token\"]\r",
+							"pm.environment.set(\"token\", token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "clientId",
+						"value": "{{client_id}}",
+						"type": "text"
+					},
+					{
+						"key": "clientSecret",
+						"value": "{{client_secret}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/signin",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create process",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"var processId = jsonData[\"processId\"]\r",
+							"pm.environment.set(\"processId\", processId);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/process",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"process"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve process",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/process/:processId",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"process",
+						":processId"
+					],
+					"variable": [
+						{
+							"key": "processId",
+							"value": "{{processId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload document",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"var document = jsonData[\"fileName\"]\r",
+							"pm.environment.set(\"document\", document);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "document",
+							"type": "file",
+							"src": "/C:/Users/vinicius.carvalho/Pictures/memes/image (12).png"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/process/:processId/document",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"process",
+						":processId",
+						"document"
+					],
+					"variable": [
+						{
+							"key": "processId",
+							"value": "{{processId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete document",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{base_url}}/process/:processId/document/:document",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"process",
+						":processId",
+						"document",
+						":document"
+					],
+					"variable": [
+						{
+							"key": "processId",
+							"value": "{{processId}}"
+						},
+						{
+							"key": "document",
+							"value": "{{document}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload selfie",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"var selfie = jsonData[\"fileName\"]\r",
+							"pm.environment.set(\"selfie\", selfie);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "selfie",
+							"type": "file",
+							"src": "/C:/Users/vinicius.carvalho/Pictures/memes/image (87).png"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/process/:processId/selfie",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"process",
+						":processId",
+						"selfie"
+					],
+					"variable": [
+						{
+							"key": "processId",
+							"value": "{{processId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete selfie",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{base_url}}/process/:processId/selfie/:selfie",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"process",
+						":processId",
+						"selfie",
+						":selfie"
+					],
+					"variable": [
+						{
+							"key": "processId",
+							"value": "{{processId}}"
+						},
+						{
+							"key": "selfie",
+							"value": "{{selfie}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Process",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{base_url}}/process/:processId/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"process",
+						":processId",
+						""
+					],
+					"variable": [
+						{
+							"key": "processId",
+							"value": "{{processId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
